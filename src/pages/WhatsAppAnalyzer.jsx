@@ -1,11 +1,11 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import ScanInlineResult from "../components/ScanInlineResult";
 import ScamScoreGauge from "../components/ScamScoreGauge";
 import { SafetyRecommendation } from "../components/SidePanels";
 import { analyzeSms } from "../api/sms";
 
-export default function SmsScanner() {
+export default function WhatsAppAnalyzer() {
   const [message, setMessage] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -29,25 +29,27 @@ export default function SmsScanner() {
 
   return (
     <div className="app-shell">
-      <Sidebar active="SMS Scanner" />
+      <Sidebar active="WhatsApp Analyzer" />
       <main className="main-content">
         <div className="top-header">
           <div>
-            <h1>SMS Scanner</h1>
-            <p style={{ color: "#6b7280", fontSize: 14 }}>Paste any SMS text to check if it's a scam.</p>
+            <h1>WhatsApp Analyzer</h1>
+            <p style={{ color: "#6b7280", fontSize: 14 }}>
+              Paste any WhatsApp message to check if it's a scam.
+            </p>
           </div>
         </div>
 
         <div className="scanner-grid">
           <div className="panel">
             <div className="panel-header">
-              <h3>Scan SMS Message</h3>
+              <h3>Scan WhatsApp Message</h3>
             </div>
             <form onSubmit={handleScan}>
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Paste the SMS message here, e.g. 'Congrats! You've won ₹25,000. Click here to claim: http://bit.ly/xyz123'"
+                placeholder="Paste the WhatsApp message here, e.g. 'Hi, this is your bank. Your account will be blocked, click here to verify: http://bit.ly/xyz123'"
                 rows={6}
                 style={{
                   width: "100%",
@@ -60,7 +62,12 @@ export default function SmsScanner() {
                   marginBottom: 14,
                 }}
               />
-              <button type="submit" className="btn-primary" style={{ width: "auto", padding: "12px 28px" }} disabled={loading || !message.trim()}>
+              <button
+                type="submit"
+                className="btn-primary"
+                style={{ width: "auto", padding: "12px 28px" }}
+                disabled={loading || !message.trim()}
+              >
                 {loading ? "Analyzing..." : "🔍 Scan Message"}
               </button>
             </form>

@@ -9,6 +9,9 @@ import EmailScanner from "./pages/EmailScanner";
 import WebsiteChecker from "./pages/WebsiteChecker";
 import QrScanner from "./pages/QrScanner";
 import VoiceAnalyzer from "./pages/VoiceAnalyzer";
+import WhatsAppAnalyzer from "./pages/WhatsAppAnalyzer";
+import SafetyTips from "./pages/SafetyTips";
+import Settings from "./pages/Settings";
 import History from "./pages/History";
 import Reports from "./pages/Reports";
 import AdminPanel from "./pages/AdminPanel";
@@ -68,6 +71,30 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <VoiceAnalyzer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/whatsapp-analyzer"
+            element={
+              <ProtectedRoute>
+                <WhatsAppAnalyzer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/safety-tips"
+            element={
+              <ProtectedRoute>
+                <SafetyTips />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <Settings />
               </ProtectedRoute>
             }
           />
