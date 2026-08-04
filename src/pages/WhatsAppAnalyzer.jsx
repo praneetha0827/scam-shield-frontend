@@ -1,4 +1,4 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import ScanInlineResult from "../components/ScanInlineResult";
 import ScamScoreGauge from "../components/ScamScoreGauge";

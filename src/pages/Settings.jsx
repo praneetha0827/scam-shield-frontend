@@ -1,4 +1,4 @@
-﻿import Sidebar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import { useAuth } from "../context/AuthContext";
 
 export default function Settings() {
