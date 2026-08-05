@@ -1,4 +1,4 @@
-const CACHE_NAME = "scam-shield-cache-v1";
+const CACHE_NAME = "scam-shield-cache-v2"; // bumped version forces old cache to clear
 const APP_SHELL = ["/", "/index.html", "/manifest.json", "/icon-192.png", "/icon-512.png"];
 
 self.addEventListener("install", (event) => {
@@ -17,15 +17,22 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
-// Network-first for API calls, cache-first for static assets
 self.addEventListener("fetch", (event) => {
   const url = new URL(event.request.url);
 
   if (url.pathname.startsWith("/api/")) {
-    // Always go to network for API data — never serve stale scan data from cache
+    return; // always network for API
+  }
+
+  // Always fetch fresh HTML for page navigations, fall back to cache only if offline
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match("/index.html"))
+    );
     return;
   }
 
+  // Static assets: cache-first, update cache on success
   event.respondWith(
     caches.match(event.request).then((cached) => {
       return (
