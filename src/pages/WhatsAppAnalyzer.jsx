@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import ScanInlineResult from "../components/ScanInlineResult";
 import ScamScoreGauge from "../components/ScamScoreGauge";
 import { SafetyRecommendation } from "../components/SidePanels";
-import { analyzeSms } from "../api/sms";
+import { analyzeWhatsApp } from "../api/whatsapp";
 
 export default function WhatsAppAnalyzer() {
   const [message, setMessage] = useState("");
@@ -18,7 +18,7 @@ export default function WhatsAppAnalyzer() {
     setLoading(true);
     setResult(null);
     try {
-      const res = await analyzeSms(message);
+      const res = await analyzeWhatsApp(message);
       setResult(res.scan);
     } catch (err) {
       setError(err.response?.data?.message || "Could not analyze this message");
