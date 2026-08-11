@@ -566,6 +566,27 @@ input[type="file"] {
   }
 }
 
+/* ===== Safety-net for two-column layouts on pages using different grid class names
+   (e.g. VoiceAnalyzer, WhatsAppAnalyzer, WebsiteChecker, QrScanner) =====
+   This catches any container whose class name contains "grid" or "Grid" and forces
+   it to a single column below 900px, even if it isn't explicitly targeted above. */
+[class*="grid"],
+[class*="Grid"] {
+  min-width: 0;
+}
+
+[class*="grid"] > *,
+[class*="Grid"] > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  [class*="grid"],
+  [class*="Grid"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 @media (max-width: 480px) {
   .auth-page {
     padding: 16px;
