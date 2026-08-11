@@ -3,7 +3,7 @@ import Sidebar from "../components/Sidebar";
 import VerdictBadge from "../components/VerdictBadge";
 import { getScanHistory } from "../api/history";
 
-const TYPE_OPTIONS = ["", "SMS", "Email", "Website", "QR Code", "Voice", "WhatsApp"];
+const TYPE_OPTIONS = ["", "SMS", "Email", "Website", "QR Code", "Voice", "WhatsApp", "UPI", "Interceptor", "Caller"];
 const VERDICT_OPTIONS = ["", "Safe", "Suspicious", "Dangerous"];
 const typeIcons = { SMS: "💬", Email: "✉️", Website: "🌐", "QR Code": "▦", Voice: "🎙️", WhatsApp: "💚" };
 

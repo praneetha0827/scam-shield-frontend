@@ -10,6 +10,9 @@ import WebsiteChecker from "./pages/WebsiteChecker";
 import QrScanner from "./pages/QrScanner";
 import VoiceAnalyzer from "./pages/VoiceAnalyzer";
 import WhatsAppAnalyzer from "./pages/WhatsAppAnalyzer";
+import UpiGuardian from "./pages/UpiGuardian";
+import ScamInterceptor from "./pages/ScamInterceptor";
+import CallerProtection from "./pages/CallerProtection";
 import SafetyTips from "./pages/SafetyTips";
 import Settings from "./pages/Settings";
 import History from "./pages/History";
@@ -39,6 +42,14 @@ export default function App() {
             element={
               <ProtectedRoute>
                 <SmsScanner />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scam-interceptor"
+            element={
+              <ProtectedRoute>
+                <ScamInterceptor />
               </ProtectedRoute>
             }
           />
@@ -75,10 +86,26 @@ export default function App() {
             }
           />
           <Route
+            path="/caller-protection"
+            element={
+              <ProtectedRoute>
+                <CallerProtection />
+              </ProtectedRoute>
+            }
+          />
+          <Route
             path="/whatsapp-analyzer"
             element={
               <ProtectedRoute>
                 <WhatsAppAnalyzer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/upi-guardian"
+            element={
+              <ProtectedRoute>
+                <UpiGuardian />
               </ProtectedRoute>
             }
           />

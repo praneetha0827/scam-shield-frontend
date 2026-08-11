@@ -3,17 +3,20 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const links = [
-  { label: "Dashboard", icon: "🏠", path: "/dashboard" },
-  { label: "SMS Scanner", icon: "💬", path: "/sms-scanner" },
-  { label: "Email Scanner", icon: "✉️", path: "/email-scanner" },
-  { label: "QR Code Scanner", icon: "▦", path: "/qr-scanner" },
-  { label: "Website Checker", icon: "🌐", path: "/website-checker" },
-  { label: "Voice Scam Analyzer", icon: "🎙️", path: "/voice-analyzer" },
-  { label: "WhatsApp Analyzer", icon: "💚", path: "/whatsapp-analyzer" },
-  { label: "History", icon: "🕘", path: "/history" },
-  { label: "Safety Tips", icon: "❓", path: "/safety-tips" },
-  { label: "Reports", icon: "📋", path: "/reports" },
-  { label: "Settings", icon: "⚙️", path: "/settings" },
+  { label: "Dashboard", icon: "Home", path: "/dashboard" },
+  { label: "AI Scam Interceptor", icon: "AI", path: "/scam-interceptor" },
+  { label: "SMS Scanner", icon: "SMS", path: "/sms-scanner" },
+  { label: "Email Scanner", icon: "Mail", path: "/email-scanner" },
+  { label: "QR Code Scanner", icon: "QR", path: "/qr-scanner" },
+  { label: "Website Checker", icon: "Web", path: "/website-checker" },
+  { label: "Voice Scam Analyzer", icon: "Voice", path: "/voice-analyzer" },
+  { label: "Caller Protection", icon: "Call", path: "/caller-protection" },
+  { label: "WhatsApp Analyzer", icon: "WA", path: "/whatsapp-analyzer" },
+  { label: "UPI Guardian", icon: "Rs", path: "/upi-guardian" },
+  { label: "History", icon: "Log", path: "/history" },
+  { label: "Safety Tips", icon: "Tips", path: "/safety-tips" },
+  { label: "Reports", icon: "Data", path: "/reports" },
+  { label: "Settings", icon: "Gear", path: "/settings" },
 ];
 
 export default function Sidebar({ active }) {
@@ -33,37 +36,35 @@ export default function Sidebar({ active }) {
 
   return (
     <>
-      {/* Hamburger button - only visible on mobile via CSS */}
       <button className="hamburger-btn" onClick={() => setIsOpen(true)} aria-label="Open menu">
-        ☰
+        Menu
       </button>
 
-      {/* Dark overlay behind sidebar when open on mobile */}
       {isOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
 
       <aside className={`sidebar ${isOpen ? "open" : ""}`}>
         <div className="sidebar-top">
           <div className="sidebar-brand">
-            <div className="auth-logo-icon">🛡️</div>
+            <div className="auth-logo-icon">SS</div>
             <div>
               <h1>Scam Shield</h1>
               <p>AI-Powered Scam Protection</p>
             </div>
           </div>
           <button className="sidebar-close-btn" onClick={closeSidebar} aria-label="Close menu">
-            ✕
+            X
           </button>
         </div>
 
-        {links.map((l) => (
+        {links.map((link) => (
           <Link
-            key={l.label}
-            to={l.path}
+            key={link.label}
+            to={link.path}
             onClick={closeSidebar}
-            className={`sidebar-link ${active === l.label ? "active" : ""}`}
+            className={`sidebar-link ${active === link.label ? "active" : ""}`}
             style={{ textDecoration: "none" }}
           >
-            <span>{l.icon}</span> {l.label}
+            <span>{link.icon}</span> {link.label}
           </Link>
         ))}
 
@@ -74,12 +75,12 @@ export default function Sidebar({ active }) {
             className={`sidebar-link ${active === "Admin Panel" ? "active" : ""}`}
             style={{ textDecoration: "none", background: active === "Admin Panel" ? undefined : "#1c1c3d" }}
           >
-            <span>🛠️</span> Admin Panel
+            <span>Admin</span> Admin Panel
           </Link>
         )}
 
         <div className="sidebar-link" onClick={handleLogout}>
-          <span>↩️</span> Logout
+          <span>Exit</span> Logout
         </div>
       </aside>
     </>
