@@ -30,12 +30,17 @@ function EntityList({ entities }) {
   if (rows.length === 0) return null;
 
   return (
-    <div className="scan-analysis" style={{ marginTop: 18 }}>
+    <div className="summary-card">
       <h4>Extracted Entities</h4>
       {rows.map(([label, values]) => (
-        <p key={label} style={{ color: "#4b5563", fontSize: 13, marginBottom: 6 }}>
-          <strong>{label}:</strong> {values.join(", ")}
-        </p>
+        <div key={label} style={{ marginBottom: 8 }}>
+          <p><strong>{label}</strong></p>
+          <div className="entity-chip-list">
+            {values.map((value) => (
+              <span className="entity-chip" key={value}>{value}</span>
+            ))}
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -131,33 +136,45 @@ export default function ScamInterceptor() {
           </div>
         </div>
 
+        <div className="feature-banner">
+          <div>
+            <h2>Contextual Scam Check</h2>
+            <p>Combine copied messages, links, payment IDs, caller details, and screenshot text into one explainable risk result.</p>
+          </div>
+          <div className="feature-pill-row">
+            <span className="feature-pill">OCR</span>
+            <span className="feature-pill">Entity Extraction</span>
+            <span className="feature-pill">Intent Detection</span>
+          </div>
+        </div>
+
         <div className="scanner-grid">
           <div className="panel">
             <div className="panel-header">
               <h3>Analyze Scam Context</h3>
             </div>
             <form onSubmit={handleAnalyze}>
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Suspicious Message Text</label>
+              <label className="field-label">Suspicious Message Text</label>
               <textarea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Paste SMS, WhatsApp, email body, or copied text..." rows={6} style={{ ...inputStyle, resize: "vertical" }} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Suspicious URL</label>
+              <label className="field-label">Suspicious URL</label>
               <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="e.g. http://bit.ly/claim-prize" style={inputStyle} />
 
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div className="form-grid-2">
                 <div>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Email Address</label>
+                  <label className="field-label">Email Address</label>
                   <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="e.g. support@paypa1-alert.com" style={inputStyle} />
                 </div>
                 <div>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Phone Number</label>
+                  <label className="field-label">Phone Number</label>
                   <input value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} placeholder="e.g. +91 98765 43210" style={inputStyle} />
                 </div>
               </div>
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>UPI ID</label>
+              <label className="field-label">UPI ID</label>
               <input value={upiId} onChange={(e) => setUpiId(e.target.value)} placeholder="e.g. unknown@upi" style={inputStyle} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Screenshot</label>
+              <label className="field-label">Screenshot</label>
               <input type="file" accept="image/*" onChange={(e) => handleScreenshot(e.target.files?.[0])} style={inputStyle} />
               {screenshotName && (
                 <p style={{ color: "#6b7280", fontSize: 12, marginTop: -8, marginBottom: 14 }}>
@@ -165,14 +182,15 @@ export default function ScamInterceptor() {
                 </p>
               )}
               {ocrLoading && (
-                <p style={{ color: "#6c4bf4", fontSize: 13, marginTop: -6, marginBottom: 14 }}>
-                  Extracting screenshot text... {ocrProgress}%
-                </p>
+                <>
+                  <p style={{ color: "#6c4bf4", fontSize: 13, marginTop: -6, marginBottom: 8 }}>Extracting screenshot text... {ocrProgress}%</p>
+                  <div className="ocr-progress"><div className="ocr-progress-fill" style={{ width: `${ocrProgress}%` }} /></div>
+                </>
               )}
               {ocrError && <div className="error-banner" style={{ marginTop: -4 }}>{ocrError}</div>}
               {(screenshotText || screenshotName) && (
                 <>
-                  <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Extracted Screenshot Text</label>
+                  <label className="field-label">Extracted Screenshot Text</label>
                   <textarea
                     value={screenshotText}
                     onChange={(e) => setScreenshotText(e.target.value)}
@@ -183,7 +201,7 @@ export default function ScamInterceptor() {
                 </>
               )}
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Extra Notes</label>
+              <label className="field-label">Extra Notes</label>
               <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Add any context: first-time recipient, caller claim, payment request, etc." rows={3} style={{ ...inputStyle, resize: "vertical" }} />
 
               <button type="submit" className="btn-primary" style={{ width: "auto", padding: "12px 28px" }} disabled={loading || ocrLoading || !hasInput}>

@@ -15,7 +15,8 @@ export default function RecentScansTable({ scans }) {
       {scans.length === 0 ? (
         <p style={{ color: "#9ca3af", padding: "24px 0" }}>No scans recorded yet.</p>
       ) : (
-        <table className="scans-table">
+        <div className="scans-table-wrapper">
+          <table className="scans-table">
           <thead>
             <tr>
               <th>Type</th>
@@ -36,7 +37,8 @@ export default function RecentScansTable({ scans }) {
               </tr>
             ))}
           </tbody>
-        </table>
+          </table>
+        </div>
       )}
     </div>
   );

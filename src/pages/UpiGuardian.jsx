@@ -64,25 +64,37 @@ export default function UpiGuardian() {
           </div>
         </div>
 
+        <div className="feature-banner">
+          <div>
+            <h2>Pay With Context</h2>
+            <p>Assess recipient, amount, and payment reason before money leaves your account.</p>
+          </div>
+          <div className="feature-pill-row">
+            <span className="feature-pill">Recipient Risk</span>
+            <span className="feature-pill">Payment Intent</span>
+            <span className="feature-pill">Explainable Warning</span>
+          </div>
+        </div>
+
         <div className="scanner-grid">
           <div className="panel">
             <div className="panel-header">
               <h3>Pre-Transaction Risk Assessment</h3>
             </div>
             <form onSubmit={handleAssess}>
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>UPI ID</label>
+              <label className="field-label">UPI ID</label>
               <input value={upiId} onChange={(e) => setUpiId(e.target.value)} placeholder="e.g. unknown@upi" style={inputStyle} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Recipient Name</label>
+              <label className="field-label">Recipient Name</label>
               <input value={recipient} onChange={(e) => setRecipient(e.target.value)} placeholder="e.g. New seller or support agent" style={inputStyle} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Amount</label>
+              <label className="field-label">Amount</label>
               <input value={amount} onChange={(e) => setAmount(e.target.value)} placeholder="e.g. 25000" style={inputStyle} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Payment Context</label>
+              <label className="field-label">Payment Context</label>
               <textarea value={context} onChange={(e) => setContext(e.target.value)} placeholder="Paste the message or reason connected to this payment request..." rows={5} style={{ ...inputStyle, resize: "vertical" }} />
 
-              <label style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 13, color: "#374151", marginBottom: 14 }}>
+              <label className="inline-check">
                 <input type="checkbox" checked={firstTimeRecipient} onChange={(e) => setFirstTimeRecipient(e.target.checked)} />
                 First-time recipient
               </label>
@@ -95,12 +107,12 @@ export default function UpiGuardian() {
             {error && <div className="error-banner" style={{ marginTop: 16 }}>{error}</div>}
 
             {assessment && (
-              <div className="scan-analysis" style={{ marginTop: 22 }}>
+              <div className="summary-card">
                 <h4>Guardian Summary</h4>
-                <p style={{ color: "#4b5563", fontSize: 13, marginBottom: 6 }}>
+                <p style={{ marginBottom: 6 }}>
                   Recipient risk: <strong>{assessment.recipientRisk}</strong>
                 </p>
-                <p style={{ color: "#4b5563", fontSize: 13 }}>Recommended action: {assessment.recommendedAction}</p>
+                <p>Recommended action: {assessment.recommendedAction}</p>
               </div>
             )}
 

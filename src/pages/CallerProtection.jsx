@@ -64,22 +64,34 @@ export default function CallerProtection() {
           </div>
         </div>
 
+        <div className="feature-banner">
+          <div>
+            <h2>Caller Impersonation Check</h2>
+            <p>Turn suspicious call details into a clear warning before sharing OTPs, passwords, or payment information.</p>
+          </div>
+          <div className="feature-pill-row">
+            <span className="feature-pill">Unknown Caller</span>
+            <span className="feature-pill">Impersonation</span>
+            <span className="feature-pill">OTP Safety</span>
+          </div>
+        </div>
+
         <div className="scanner-grid">
           <div className="panel">
             <div className="panel-header">
               <h3>Analyze Caller Risk</h3>
             </div>
             <form onSubmit={handleAnalyze}>
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Caller Number</label>
+              <label className="field-label">Caller Number</label>
               <input value={callerNumber} onChange={(e) => setCallerNumber(e.target.value)} placeholder="e.g. Unknown, Private, +91 98765 43210" style={inputStyle} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Claimed Organization</label>
+              <label className="field-label">Claimed Organization</label>
               <input value={claimedOrganization} onChange={(e) => setClaimedOrganization(e.target.value)} placeholder="e.g. SBI Bank, Income Tax, courier support" style={inputStyle} />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>What Did The Caller Say?</label>
+              <label className="field-label">What Did The Caller Say?</label>
               <textarea value={context} onChange={(e) => setContext(e.target.value)} placeholder="Paste or type the caller's request, threat, payment demand, OTP request, or other suspicious context..." rows={7} style={{ ...inputStyle, resize: "vertical" }} />
 
-              <label style={{ display: "flex", gap: 8, alignItems: "center", fontSize: 13, color: "#374151", marginBottom: 14 }}>
+              <label className="inline-check">
                 <input type="checkbox" checked={unknownCaller} onChange={(e) => setUnknownCaller(e.target.checked)} />
                 This is an unknown or unexpected caller
               </label>
@@ -92,11 +104,9 @@ export default function CallerProtection() {
             {error && <div className="error-banner" style={{ marginTop: 16 }}>{error}</div>}
 
             {callerRisk && (
-              <div className="scan-analysis" style={{ marginTop: 22 }}>
+              <div className="summary-card">
                 <h4>Caller Safety Summary</h4>
-                <p style={{ color: "#4b5563", fontSize: 13 }}>
-                  Recommended action: {callerRisk.recommendedAction}
-                </p>
+                <p>Recommended action: {callerRisk.recommendedAction}</p>
               </div>
             )}
 

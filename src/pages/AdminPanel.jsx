@@ -61,7 +61,8 @@ export default function AdminPanel() {
               {filteredUsers.length === 0 ? (
                 <p style={{ color: "#9ca3af", padding: "24px 0" }}>No users match this search.</p>
               ) : (
-                <table className="scans-table">
+                <div className="scans-table-wrapper">
+                  <table className="scans-table">
                   <thead>
                     <tr>
                       <th>User</th>
@@ -91,7 +92,8 @@ export default function AdminPanel() {
                       </tr>
                     ))}
                   </tbody>
-                </table>
+                  </table>
+                </div>
               )}
             </div>
           </>

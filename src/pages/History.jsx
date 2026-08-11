@@ -78,7 +78,8 @@ export default function History() {
             <p style={{ color: "#9ca3af", padding: "24px 0" }}>No scans match these filters.</p>
           ) : (
             <>
-              <table className="scans-table">
+              <div className="scans-table-wrapper">
+                <table className="scans-table">
                 <thead>
                   <tr>
                     <th>Type</th>
@@ -99,7 +100,8 @@ export default function History() {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+                </table>
+              </div>
 
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 18 }}>
                 <span style={{ fontSize: 13, color: "#6b7280" }}>
