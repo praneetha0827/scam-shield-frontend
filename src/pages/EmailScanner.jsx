@@ -17,20 +17,26 @@ const inputStyle = {
 
 export default function EmailScanner() {
   const [senderEmail, setSenderEmail] = useState("");
+  const [replyTo, setReplyTo] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
+  const [links, setLinks] = useState("");
+  const [headers, setHeaders] = useState("");
+  const [attachments, setAttachments] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const hasInput = [subject, body, links, headers, attachments].some((value) => value.trim());
+
   const handleScan = async (e) => {
     e.preventDefault();
-    if (!subject.trim() && !body.trim()) return;
+    if (!hasInput) return;
     setError("");
     setLoading(true);
     setResult(null);
     try {
-      const res = await analyzeEmail(senderEmail, subject, body);
+      const res = await analyzeEmail({ senderEmail, replyTo, subject, body, links, headers, attachments });
       setResult(res.scan);
     } catch (err) {
       setError(err.response?.data?.message || "Could not analyze this email");
@@ -46,26 +52,52 @@ export default function EmailScanner() {
         <div className="top-header">
           <div>
             <h1>Email Scanner</h1>
-            <p style={{ color: "#6b7280", fontSize: 14 }}>Paste an email's sender, subject and body to check for phishing.</p>
+            <p style={{ color: "#6b7280", fontSize: 14 }}>Check suspicious emails for phishing, spoofing, unsafe links, and risky attachments.</p>
           </div>
         </div>
 
-        <div className="dashboard-grid" style={{ gridTemplateColumns: "1fr 320px" }}>
+        <div className="feature-banner">
+          <div>
+            <h2>Fake Mail Detection</h2>
+            <p>Paste the visible email content plus technical clues like Reply-To, links, headers, or attachment names for a stronger result.</p>
+          </div>
+          <div className="feature-pill-row">
+            <span className="feature-pill">Phishing</span>
+            <span className="feature-pill">Spoofing</span>
+            <span className="feature-pill">Unsafe Attachments</span>
+          </div>
+        </div>
+
+        <div className="scanner-grid">
           <div className="panel">
             <div className="panel-header">
-              <h3>Scan Email</h3>
+              <h3>Analyze Email Risk</h3>
             </div>
             <form onSubmit={handleScan}>
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Sender Email</label>
-              <input
-                type="text"
-                value={senderEmail}
-                onChange={(e) => setSenderEmail(e.target.value)}
-                placeholder="e.g. security@paypa1-verify.com"
-                style={inputStyle}
-              />
+              <div className="form-grid-2">
+                <div>
+                  <label className="field-label">Sender Email</label>
+                  <input
+                    type="text"
+                    value={senderEmail}
+                    onChange={(e) => setSenderEmail(e.target.value)}
+                    placeholder="e.g. security@paypa1-verify.com"
+                    style={inputStyle}
+                  />
+                </div>
+                <div>
+                  <label className="field-label">Reply-To Email</label>
+                  <input
+                    type="text"
+                    value={replyTo}
+                    onChange={(e) => setReplyTo(e.target.value)}
+                    placeholder="e.g. claims@gmail.com"
+                    style={inputStyle}
+                  />
+                </div>
+              </div>
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Subject</label>
+              <label className="field-label">Subject</label>
               <input
                 type="text"
                 value={subject}
@@ -74,7 +106,7 @@ export default function EmailScanner() {
                 style={inputStyle}
               />
 
-              <label style={{ fontSize: 13, fontWeight: 600, color: "#374151" }}>Email Body</label>
+              <label className="field-label">Email Body</label>
               <textarea
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
@@ -83,12 +115,54 @@ export default function EmailScanner() {
                 style={{ ...inputStyle, resize: "vertical" }}
               />
 
-              <button type="submit" className="btn-primary" style={{ width: "auto", padding: "12px 28px" }} disabled={loading || (!subject.trim() && !body.trim())}>
-                {loading ? "Analyzing..." : "🔍 Scan Email"}
+              <label className="field-label">Links Found In Email</label>
+              <textarea
+                value={links}
+                onChange={(e) => setLinks(e.target.value)}
+                placeholder="Paste suspicious links, one per line, if visible..."
+                rows={3}
+                style={{ ...inputStyle, resize: "vertical" }}
+              />
+
+              <div className="form-grid-2">
+                <div>
+                  <label className="field-label">Header Clues</label>
+                  <textarea
+                    value={headers}
+                    onChange={(e) => setHeaders(e.target.value)}
+                    placeholder="Optional: Authentication-Results, SPF, DKIM, DMARC..."
+                    rows={4}
+                    style={{ ...inputStyle, resize: "vertical" }}
+                  />
+                </div>
+                <div>
+                  <label className="field-label">Attachment Names</label>
+                  <textarea
+                    value={attachments}
+                    onChange={(e) => setAttachments(e.target.value)}
+                    placeholder="e.g. invoice.apk, prize.zip, statement.pdf"
+                    rows={4}
+                    style={{ ...inputStyle, resize: "vertical" }}
+                  />
+                </div>
+              </div>
+
+              <button type="submit" className="btn-primary" style={{ width: "auto", padding: "12px 28px" }} disabled={loading || !hasInput}>
+                {loading ? "Analyzing..." : "Scan Email"}
               </button>
             </form>
 
             {error && <div className="error-banner" style={{ marginTop: 16 }}>{error}</div>}
+
+            {result && (
+              <div className="summary-card">
+                <h4>Email Safety Summary</h4>
+                <p>
+                  {result.riskLevel || result.verdict} risk result for this email. Verify the sender outside the email before opening links,
+                  attachments, or sharing account details.
+                </p>
+              </div>
+            )}
 
             <ScanInlineResult result={result} />
           </div>
