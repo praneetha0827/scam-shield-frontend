@@ -113,12 +113,12 @@ img, video, iframe {
   width: 260px;
   background: var(--sidebar-bg);
   color: #cfd0e8;
-  padding: 24px 16px;
+  padding: 22px 16px;
   flex-shrink: 0;
 }
 
-.sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 24px; }
-.sidebar-brand h1 { font-size: 16px; color: #fff; }
+.sidebar-brand { display: flex; align-items: center; gap: 10px; padding: 0 8px 22px; min-width: 0; }
+.sidebar-brand h1 { font-size: 16px; color: #fff; white-space: nowrap; }
 .sidebar-brand p { font-size: 11px; color: #9a9ac0; }
 
 .sidebar-link {
@@ -131,7 +131,9 @@ img, video, iframe {
   margin-bottom: 4px;
   cursor: pointer;
   color: #cfd0e8;
+  transition: background .15s ease, color .15s ease, transform .15s ease;
 }
+.sidebar-link:hover { background: rgba(255,255,255,0.08); color: #fff; transform: translateX(2px); }
 .sidebar-link.active { background: var(--primary); color: #fff; }
 
 .main-content { flex: 1; min-width: 0; padding: 28px 32px; }
@@ -307,39 +309,63 @@ input[type="file"] {
   font-weight: 700;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
 }
 
 .sidebar-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 8px;
 }
 
 .sidebar-close-btn {
   display: none;
-  background: none;
+  background: rgba(255,255,255,0.08);
   border: none;
   color: #fff;
   font-size: 20px;
   cursor: pointer;
-  padding: 4px 8px;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  line-height: 1;
 }
+.sidebar-close-btn:hover { background: rgba(255,255,255,0.16); }
 
 .sidebar-overlay {
   display: none;
 }
 
-.sidebar-link span {
-  min-width: 42px;
-  font-size: 11px;
+.sidebar-icon {
+  width: 32px;
+  min-width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(255,255,255,0.09);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
   font-weight: 800;
   text-align: center;
-  opacity: 0.85;
+}
+
+.sidebar-label {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.sidebar-link.active .sidebar-icon {
+  background: rgba(255,255,255,0.2);
 }
 
 @media (max-width: 900px) {
   .hamburger-btn {
-    display: block;
+    display: flex;
   }
 
   .sidebar-close-btn {
@@ -355,12 +381,13 @@ input[type="file"] {
     top: 0;
     left: 0;
     height: 100vh;
-    width: 260px;
-    max-width: 80vw;
+    width: 282px;
+    max-width: 86vw;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
     z-index: 1000;
     overflow-y: auto;
+    padding-top: 18px;
   }
 
   .sidebar.open {

@@ -3,20 +3,20 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 
 const links = [
-  { label: "Dashboard", icon: "Home", path: "/dashboard" },
-  { label: "AI Scam Interceptor", icon: "AI", path: "/scam-interceptor" },
-  { label: "SMS Scanner", icon: "SMS", path: "/sms-scanner" },
-  { label: "Email Scanner", icon: "Mail", path: "/email-scanner" },
-  { label: "QR Code Scanner", icon: "QR", path: "/qr-scanner" },
-  { label: "Website Checker", icon: "Web", path: "/website-checker" },
-  { label: "Voice Scam Analyzer", icon: "Voice", path: "/voice-analyzer" },
-  { label: "Caller Protection", icon: "Call", path: "/caller-protection" },
-  { label: "WhatsApp Analyzer", icon: "WA", path: "/whatsapp-analyzer" },
-  { label: "UPI Guardian", icon: "Rs", path: "/upi-guardian" },
-  { label: "History", icon: "Log", path: "/history" },
-  { label: "Safety Tips", icon: "Tips", path: "/safety-tips" },
-  { label: "Reports", icon: "Data", path: "/reports" },
-  { label: "Settings", icon: "Gear", path: "/settings" },
+  { label: "Dashboard", icon: "🏠", path: "/dashboard" },
+  { label: "AI Scam Interceptor", icon: "🛡️", path: "/scam-interceptor" },
+  { label: "SMS Scanner", icon: "💬", path: "/sms-scanner" },
+  { label: "Email Scanner", icon: "📧", path: "/email-scanner" },
+  { label: "QR Code Scanner", icon: "🔳", path: "/qr-scanner" },
+  { label: "Website Checker", icon: "🌐", path: "/website-checker" },
+  { label: "Voice Scam Analyzer", icon: "🎙️", path: "/voice-analyzer" },
+  { label: "Caller Protection", icon: "📞", path: "/caller-protection" },
+  { label: "WhatsApp Analyzer", icon: "🟢", path: "/whatsapp-analyzer" },
+  { label: "UPI Guardian", icon: "₹", path: "/upi-guardian" },
+  { label: "History", icon: "🕒", path: "/history" },
+  { label: "Safety Tips", icon: "💡", path: "/safety-tips" },
+  { label: "Reports", icon: "📊", path: "/reports" },
+  { label: "Settings", icon: "⚙️", path: "/settings" },
 ];
 
 export default function Sidebar({ active }) {
@@ -36,9 +36,12 @@ export default function Sidebar({ active }) {
 
   return (
     <>
-      <button className="hamburger-btn" onClick={() => setIsOpen(true)} aria-label="Open menu">
-        Menu
-      </button>
+      {!isOpen && (
+        <button className="hamburger-btn" onClick={() => setIsOpen(true)} aria-label="Open menu">
+          <span aria-hidden="true">☰</span>
+          <span>Menu</span>
+        </button>
+      )}
 
       {isOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
 
@@ -52,7 +55,7 @@ export default function Sidebar({ active }) {
             </div>
           </div>
           <button className="sidebar-close-btn" onClick={closeSidebar} aria-label="Close menu">
-            X
+            ×
           </button>
         </div>
 
@@ -64,7 +67,8 @@ export default function Sidebar({ active }) {
             className={`sidebar-link ${active === link.label ? "active" : ""}`}
             style={{ textDecoration: "none" }}
           >
-            <span>{link.icon}</span> {link.label}
+            <span className="sidebar-icon" aria-hidden="true">{link.icon}</span>
+            <span className="sidebar-label">{link.label}</span>
           </Link>
         ))}
 
@@ -75,12 +79,14 @@ export default function Sidebar({ active }) {
             className={`sidebar-link ${active === "Admin Panel" ? "active" : ""}`}
             style={{ textDecoration: "none", background: active === "Admin Panel" ? undefined : "#1c1c3d" }}
           >
-            <span>Admin</span> Admin Panel
+            <span className="sidebar-icon" aria-hidden="true">👑</span>
+            <span className="sidebar-label">Admin Panel</span>
           </Link>
         )}
 
         <div className="sidebar-link" onClick={handleLogout}>
-          <span>Exit</span> Logout
+          <span className="sidebar-icon" aria-hidden="true">🚪</span>
+          <span className="sidebar-label">Logout</span>
         </div>
       </aside>
     </>
